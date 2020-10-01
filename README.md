@@ -20,8 +20,8 @@ How difficult is the route.
 
 How to find it:
 - If climbing is in the title take it from there.
-- If it's not there then look at the <h1></h1> <h2></h2> <h3></h3>
-- If it's not there then look all the <p></p> and similar tags and try to get
+- If it's not there then look at the `<h1></h1> <h2></h2> <h3></h3>`
+- If it's not there then look all the `<p></p>` and similar tags and try to get
   the highest grade found there. NOTE: looking at <a> tags might get a wrong 
   grade since it can be titles or other routes.
 
