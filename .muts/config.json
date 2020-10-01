@@ -1,0 +1,27 @@
+{
+    "ignore_modules": [
+        "__init__.py"
+    ],
+    "ignore_packages": [
+        "__pycache__",
+        ".mypy_cache",
+        ".pytest_cache"
+    ],
+    "ignore_tests": [
+        "input",
+        "mock",
+        "__init__.py",
+        "__init__",
+        "__pycache__",
+        ".mypy_cache",
+        "inputs"
+    ],
+    "ignore_methods": [
+        "router"
+    ],
+    "code_path": "src/",
+    "test_path": "/tests",
+    "test_template": "",
+    "multi_threaded": "false",
+    "environment": "local"
+}
