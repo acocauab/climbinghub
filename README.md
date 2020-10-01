@@ -46,6 +46,13 @@ Which extra information I want?
 - Original website -> Main page from original url
 - Pictures? -> All pictures that can be found in original webpage
 
+Extra things to care about
+==========================
+
+We want this page to be multi language.
+That means that the key words not necessary are the same for each language
+Suport for multilanguage
+
 Any sugestion?
 ==============
 
