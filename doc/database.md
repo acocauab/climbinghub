@@ -19,9 +19,9 @@ NOTE: For the MVP we will not contemplate users.
 {
     "_id": "https://www.rocjumper.com/escalada/via-nuria-serra-sant-joan-boxiols/",
     "name": "Vía de la Núria (V 250 m) Serra de Sant Joan",
-    "website": "https://www.rocjumper.com/"
+    "website": "https://www.rocjumper.com/",
     "grade": {
-        "original": "6a+/A0 D+"
+        "original": "6a+/A0 D+",
         "climbing": 615,
         "Artificial": 4,
         "Difficulty": 7
@@ -29,21 +29,21 @@ NOTE: For the MVP we will not contemplate users.
     "zone": {
         "name": "montserrat",
         "gps": "https://www.rocjumper.com/index.php?mapsmarkerpro=download_gpx&url=https://www.rocjumper.com/wp-content/uploads/2020/09/acceso-via-nuria-serra-sant-joan-boxiols-rocjumper.gpx"
-    }
+    },
     "tags": {
         "long": true,
         "classic": false,
         "snow": false,
         "ice": false,
         "sportive": false
-    }
+    },
     "equipment": [
         "Casco", 
         "Arnés", 
         "Bagas de anclaje", 
         "Guantes (opcional)", 
         "Asegurador-Descensor", 
-        Autoseguro", 
+        "Autoseguro", 
         "Cuerdas 2 x 60 m", 
         "Reuniones", 
         "12 x Cintas expresses", 
