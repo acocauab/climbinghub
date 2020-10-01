@@ -12,7 +12,7 @@ Collections
   climbing routes. (that people manually introduced) Maybe it can contain also
   contains links to the route collection.
 
-NOTE: For the MVP we will not contemplate users.
+> NOTE: For the MVP we will not contemplate users.
 
 *Route document example:*
 ```json
@@ -57,11 +57,12 @@ NOTE: For the MVP we will not contemplate users.
 ```
 
 > NOTE: Equipment section wont be included MVP
+
 > NOTE: Zone section wont be included for the MVP (it might be changed)
 
-GRADE: The grade wont be expressed as 6a, D+ or A0 since this will make more
-dificult to query the databse with `<` and `>` expresions instead integers will be
-used. Anyway we will save the original text to avoid missing information.
+> GRADE: The grade wont be expressed as 6a, D+ or A0 since this will make more
+> dificult to query the databse with `<` and `>` expresions instead integers will be
+> used. Anyway we will save the original text to avoid missing information.
 
 Climbing grades will consist in 3 numbers: Example: 6b+ -> 625
 `<gradenumber><letter><superior>`
