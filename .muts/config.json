@@ -5,7 +5,8 @@
     "ignore_packages": [
         "__pycache__",
         ".mypy_cache",
-        ".pytest_cache"
+        ".pytest_cache",
+        "grades"
     ],
     "ignore_tests": [
         "input",

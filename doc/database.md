@@ -14,7 +14,7 @@ Collections
 
 > NOTE: For the MVP we will not contemplate users.
 
-*Route document example:*
+**Route document example:**
 ```json
 {
     "_id": "https://www.rocjumper.com/escalada/via-nuria-serra-sant-joan-boxiols/",
@@ -68,10 +68,17 @@ Climbing grades will consist in 3 numbers: Example: 6b+ -> 625
 `<gradenumber><letter><superior>`
 
 Where:
-- *gradenumber*: The same as the original grade
-- *letter*: a:1, b:2, c:3 no-letter: 0
-- *superior*: if + then 5 else 0
+- **gradenumber**: The same as the original grade
+- **letter**: a:1, b:2, c:3 no-letter: 0
+- **superior**: if + then 5 else 0
 
 Artificial and Difficulty will be correlative numbers.
 
-
+```json
+{
+    "_id": "https://www.rocjumper.com,
+    "pages": [
+        
+    ] 
+}
+```
