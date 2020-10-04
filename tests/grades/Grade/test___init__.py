@@ -32,10 +32,9 @@ class TestGradeInit(unittest.TestCase):
     @timeout_decorator.timeout(30)
     def setUp(self) -> None:
         """Set up variables for testing."""
-        self._grade = Grade()
+        self._grade = Grade("./src/grades/french.alt.json")
 
     @timeout_decorator.timeout(30)
-    @unittest.skip("TODO")
     def test_1(self) -> None:
         """Test 1."""
         self._grade.__init__("./src/grades/french.alt.json")

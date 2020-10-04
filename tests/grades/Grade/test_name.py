@@ -36,7 +36,6 @@ class TestGradeName(unittest.TestCase):
         self._grade = Grade("./src/grades/french.alt.json")
 
     @timeout_decorator.timeout(30)
-    @unittest.skip("TODO")
     def test_1(self) -> None:
         """Test 1."""
-        assert "French alternative" == self._grade.name("")
+        assert "French alternative" == self._grade.name
