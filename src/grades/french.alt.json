@@ -1,6 +1,6 @@
 {
     "name": "French alternative",
-    "hub_name": "climbing",
+    "id": "climbing",
     "grades": {
         "I": 100,
         "II": 200,

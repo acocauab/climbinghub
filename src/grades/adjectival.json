@@ -1,6 +1,6 @@
 {
     "name": "Adjectival",
-    "hub_name": "difficulty",
+    "id": "difficulty",
     "grades": {
         "F": 0,
         "F+": 5,

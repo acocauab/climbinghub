@@ -1,6 +1,6 @@
 {
     "name": "Artificial",
-    "hub_name": "artificial",
+    "id": "artificial",
     "grades":{
         "A0": 0,
         "A1": 10,

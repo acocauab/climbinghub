@@ -43,6 +43,15 @@ class Grade():
         """
         return self._grades["name"]
 
+    @property
+    def id(self) -> str:
+        """Get grade id
+
+        Returns:
+            str: Grade id
+        """
+        return self._grades["id"]
+
     def grade_to_int(self, grade: str) -> int:
         """Convert grade to internal integer representation.
 
