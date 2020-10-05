@@ -31,8 +31,7 @@ class Grade():
         Returns:
             list: of string grades
         """
-        grades = list(self._grades.keys())
-        grades.remove("name")
+        grades = list(self._grades["grades"].keys())
         return grades
 
     @property
@@ -53,4 +52,4 @@ class Grade():
         Returns:
             int: internal representation
         """
-        return self._grades[grade]
+        return self._grades["grades"][grade]
