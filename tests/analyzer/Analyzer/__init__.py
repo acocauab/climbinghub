@@ -1,0 +1,6 @@
+from .test___init__ import TestAnalyzerInit
+from .test__parse_grades import TestAnalyzerParseGrades
+from .test__parse_tags import TestAnalyzerParseTags
+from .test__parse_name import TestAnalyzerParseName
+from .test__parse_photos import TestAnalyzerParsePhotos
+from .test__parse_gps import TestAnalyzerParseGps

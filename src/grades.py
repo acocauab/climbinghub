@@ -19,6 +19,7 @@ class Grade():
         Args:
             definition (str): Json definition of the grade
         """
+        self.definition = definition
         with open(definition) as fp:
             self._grades = json.load(fp)
 
@@ -45,7 +46,7 @@ class Grade():
 
     @property
     def id(self) -> str:
-        """Get grade id
+        """Get grade id.
 
         Returns:
             str: Grade id
@@ -62,3 +63,16 @@ class Grade():
             int: internal representation
         """
         return self._grades["grades"][grade]
+
+    def check_grade(self, words: list) -> str:
+        """Check if the grades are in a list of words.
+
+        Args:
+            words (list): List of words to check
+
+        Returns:
+            str: With the grade string
+        """
+        for word in words:
+            if word in self.grades:
+                return word
