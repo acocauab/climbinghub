@@ -61,7 +61,7 @@ class Analyzer():
 
         def get_grades(text: str) -> None:
             words_fdist = self.process_text(text)
-            print(words_fdist)
+            words_fdist = [word[0] for word in words_fdist]
             # NOTE: Do we miss here a sort of words_fdist?
             for grade in self.grades.values():
                 if grade.check_grade(words_fdist) is None:
@@ -69,7 +69,7 @@ class Analyzer():
                 f_grade = grade.grade_to_int(
                     grade.check_grade(words_fdist))
                 if f_grade is not None and not self.route["grade"][grade.id]:
-                    self.route["grade"][grade.id] = final_grade
+                    self.route["grade"][grade.id] = f_grade
 
         title = self.webpage.find('title')
         get_grades(title.text)

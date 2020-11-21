@@ -39,4 +39,4 @@ class TestAnalyzerParseGrades(unittest.TestCase):
     def test_1(self) -> None:
         """Test 1. Grade in title"""
         self._analyzer._parse_grades()
-        self.assertEqual(self._analyzer.route["grade"], "6a+")
+        self.assertEqual(self._analyzer.route["grade"]["climbing"], 615)
