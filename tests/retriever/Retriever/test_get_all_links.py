@@ -12,6 +12,7 @@ https://github.com/pnpnpn/timeout-decorator
 import unittest
 from unittest.mock import patch
 import timeout_decorator
+import asyncio
 
 from src.retriever import Retriever
 
@@ -34,10 +35,14 @@ class TestRetrieverGetAllLinks(unittest.TestCase):
     def setUp(self) -> None:
         """Set up variables for testing."""
         self._retriever = Retriever("https://www.google.es")
+        self.loop = asyncio.get_event_loop()
 
     @timeout_decorator.timeout(30)
     def test_1(self) -> None:
         """Test 1."""
-        self._retriever.get_all_links(
-            '<a href="https://www.google.es/gmail">google</a>')
+        self.loop.run_until_complete(
+            self._retriever.get_all_links(
+                '<a href="https://www.google.es/gmail">google</a>')
+        )
+
         assert self._retriever.visited[0] == "https://www.google.es/gmail"

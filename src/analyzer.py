@@ -11,9 +11,14 @@ from bs4 import BeautifulSoup
 from . import grades
 import logging
 import nltk
+import pymongo
 # ==== CONSTANTS DEFINITIONS ==================================================
 GRADES_DIR = str(pathlib.Path(__file__).parent.absolute()) + "/grades"
 logger = logging.getLogger(__name__)
+
+# logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 # ==== CLASS DEFINITION =======================================================
@@ -34,12 +39,13 @@ class Analyzer():
         self.original_webpage = webpage
         self.webpage = BeautifulSoup(webpage, 'html.parser')
         self.route = {}
-        self.route["_id"] = webpage
+        self.route["_id"] = website
         self.route["website"] = website
         self.route["grade"] = {}  # type:ignore
         self.route["photos"] = []  # type:ignore
         self.website = website
         self.grades = {}
+        self.db = pymongo.MongoClient("mongodb://localhost:27017/")["CLIMBING_HUB"]
 
         # Initialize grades
         for path in os.listdir(GRADES_DIR):
@@ -49,7 +55,6 @@ class Analyzer():
             if ".json" not in path:
                 continue
 
-            print(GRADES_DIR + "/" + path)
             g = grades.Grade(GRADES_DIR + "/" + path)
             # TODO: Check for duplicate grades.
             self.grades[g.name] = g
@@ -57,7 +62,7 @@ class Analyzer():
     def _parse_grades(self) -> None:
         # Initialize grade
         for grade in self.grades.values():
-            self.route["grade"][grade.id] = None
+            self.route["grade"][grade.id] = None  # type:ignore
 
         def get_grades(text: str) -> None:
             words_fdist = self.process_text(text)
@@ -69,7 +74,9 @@ class Analyzer():
                 f_grade = grade.grade_to_int(
                     grade.check_grade(words_fdist))
                 if f_grade is not None and not self.route["grade"][grade.id]:
-                    self.route["grade"][grade.id] = f_grade
+                    self.route["grade"][grade.id] = f_grade  # type:ignore
+                    logger.debug("Found grade " + str(f_grade) +
+                                 " for route " + self.website)
 
         title = self.webpage.find('title')
         get_grades(title.text)
@@ -85,8 +92,9 @@ class Analyzer():
         pass
 
     def _parse_name(self) -> None:
-        logger.info("Parsing image name")
         self.route["name"] = self.webpage.title.string
+        logger.debug("Found name: " + self.route["name"] + " for website" +
+                     self.website)
 
     def _parse_photos(self) -> None:
         logger.info("Parsing web images")
@@ -96,12 +104,38 @@ class Analyzer():
             if hostname == self.website:
                 self.route["photos"].append(img)  # type: ignore
 
+        logger.debug("Found " + str(len(self.route["photos"]))
+                     + " for website" + self.website)
+
     def _parse_gps(self) -> None:
         # TODO: To be done in the future.
         pass
 
-    def process_text(self, text):
+    def process_text(self, text: str) -> list:
+        """Process text to get words.
+
+        Args:
+            text (str): text to process
+
+        Returns:
+            list: List with the words and the occurence
+        """
         words = nltk.word_tokenize(text)
         # TODO: Remove stop words
         fdist = nltk.probability.FreqDist(words)
         return fdist.most_common()
+
+    def _save_to_db(self) -> None:
+        """Save route to the database."""
+        # TODO: Create DB interface.
+        try:
+            self.db["routes"].insert_one(self.route)
+        except Exception:
+            logger.error("Duplicated entry: " + self.website)
+
+    def analyze(self) -> None:
+        """Analyze a route."""
+        self._parse_name()
+        self._parse_photos()
+        self._parse_grades()
+        self._save_to_db()
