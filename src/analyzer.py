@@ -45,7 +45,8 @@ class Analyzer():
         self.route["photos"] = []  # type:ignore
         self.website = website
         self.grades = {}
-        self.db = pymongo.MongoClient("mongodb://localhost:27017/")["CLIMBING_HUB"]
+        self.db =\
+            pymongo.MongoClient("mongodb://localhost:27017/")["CLIMBING_HUB"]
 
         # Initialize grades
         for path in os.listdir(GRADES_DIR):
@@ -69,11 +70,12 @@ class Analyzer():
             words_fdist = [word[0] for word in words_fdist]
             # NOTE: Do we miss here a sort of words_fdist?
             for grade in self.grades.values():
-                if grade.check_grade(words_fdist) is None:
+                if grade.check_grade(words_fdist) == grades.NO_GRADE:
                     continue
                 f_grade = grade.grade_to_int(
                     grade.check_grade(words_fdist))
-                if f_grade is not None and not self.route["grade"][grade.id]:
+                if f_grade is not None and not \
+                   self.route["grade"][grade.id]:  # type: ignore
                     self.route["grade"][grade.id] = f_grade  # type:ignore
                     logger.debug("Found grade " + str(f_grade) +
                                  " for route " + self.website)

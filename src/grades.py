@@ -7,6 +7,7 @@ have in the json formats.
 # ==== IMPORTS SECTION ========================================================
 import json
 # ==== CONSTANTS DEFINITIONS ==================================================
+NO_GRADE = "NO_GRADE"
 
 
 # ==== CLASS DEFINITION =======================================================
@@ -76,3 +77,4 @@ class Grade():
         for word in words:
             if word in self.grades:
                 return word
+        return NO_GRADE
