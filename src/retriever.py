@@ -6,6 +6,7 @@ This will be perform in async way.
 # ==== IMPORTS SECTION ========================================================
 import aiohttp
 from urllib.parse import urlparse
+from urllib.parse import urldefrag
 from bs4 import BeautifulSoup
 import typing
 import asyncio
@@ -81,7 +82,7 @@ class Retriever():
         soup = BeautifulSoup(html, "html.parser")
 
         for link in soup.find_all('a', href=True):
-            url = link['href']
+            url = urldefrag(link['href'])[0]
             hostname = urlparse(url).netloc
             if self.hostname == hostname:
                 # To avoid querys to the db.

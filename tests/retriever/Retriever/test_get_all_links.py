@@ -49,3 +49,15 @@ class TestRetrieverGetAllLinks(unittest.TestCase):
         )
 
         assert self._retriever.visited[0] == "https://www.google.es/gmail"
+
+    @timeout_decorator.timeout(30)
+    def test_2(self) -> None:
+        """Test 1."""
+        self.loop.run_until_complete(
+            self._retriever.get_all_links(
+                '<a href="https://www.google.es/gmail#hello">google</a>')
+        )
+
+        assert self._retriever.visited[0] == "https://www.google.es/gmail"
+        assert "https://www.google.es/gmail#hello" not in \
+            self._retriever.visited[0]
