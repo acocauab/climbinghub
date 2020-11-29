@@ -83,6 +83,8 @@ class Retriever():
 
         for link in soup.find_all('a', href=True):
             url = urldefrag(link['href'])[0]
+            if url.endswith(".jpg"):
+                continue
             hostname = urlparse(url).netloc
             if self.hostname == hostname:
                 # To avoid querys to the db.
