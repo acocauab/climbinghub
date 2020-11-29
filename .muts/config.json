@@ -1,6 +1,8 @@
 {
     "ignore_modules": [
-        "__init__.py"
+        "__init__.py",
+        "db.py",
+        "logs.py"
     ],
     "ignore_packages": [
         "__pycache__",

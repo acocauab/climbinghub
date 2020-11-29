@@ -6,8 +6,11 @@ have in the json formats.
 
 # ==== IMPORTS SECTION ========================================================
 import json
+import pathlib
+import os
 # ==== CONSTANTS DEFINITIONS ==================================================
 NO_GRADE = "NO_GRADE"
+GRADES_DIR = str(pathlib.Path(__file__).parent.absolute()) + "/grades"
 
 
 # ==== CLASS DEFINITION =======================================================
@@ -78,3 +81,23 @@ class Grade():
             if word in self.grades:
                 return word
         return NO_GRADE
+
+
+def _init_grades() -> dict:
+    # Initialize grades
+    grades: dict = {}
+    for path in os.listdir(GRADES_DIR):
+
+        if os.path.isdir(path):
+            continue
+        if ".json" not in path:
+            continue
+
+        g = Grade(GRADES_DIR + "/" + path)
+        # TODO: Check for duplicate grades.
+        grades[g.name] = g
+
+    return grades
+
+
+grades = _init_grades()

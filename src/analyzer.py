@@ -4,21 +4,13 @@ Short description
 """
 
 # ==== IMPORTS SECTION ========================================================
-import os
 from urllib.parse import urlparse
-import pathlib
 from bs4 import BeautifulSoup
 from . import grades
-import logging
 import nltk
 import pymongo
+from .logs import logger
 # ==== CONSTANTS DEFINITIONS ==================================================
-GRADES_DIR = str(pathlib.Path(__file__).parent.absolute()) + "/grades"
-logger = logging.getLogger(__name__)
-
-# logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 
 # ==== CLASS DEFINITION =======================================================
@@ -44,21 +36,9 @@ class Analyzer():
         self.route["grade"] = {}  # type:ignore
         self.route["photos"] = []  # type:ignore
         self.website = website
-        self.grades = {}
+        self.grades = grades.grades
         self.db =\
             pymongo.MongoClient("mongodb://localhost:27017/")["CLIMBING_HUB"]
-
-        # Initialize grades
-        for path in os.listdir(GRADES_DIR):
-
-            if os.path.isdir(path):
-                continue
-            if ".json" not in path:
-                continue
-
-            g = grades.Grade(GRADES_DIR + "/" + path)
-            # TODO: Check for duplicate grades.
-            self.grades[g.name] = g
 
     def _parse_grades(self) -> None:
         # Initialize grade

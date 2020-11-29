@@ -9,13 +9,12 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import typing
 import asyncio
-import logging
+from random import randint
 from .analyzer import Analyzer
+from .logs import logger
+from .db import DBInterface
 
 # ==== CONSTANTS DEFINITIONS ==================================================
-# logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 
 # ==== CLASS DEFINITION =======================================================
@@ -31,6 +30,7 @@ class Retriever():
         self.url = url
         self.hostname = urlparse(self.url).netloc
         self.visited: typing.List[str] = []
+        self.db = DBInterface()
 
     async def retrieve(self, url: str = "") -> None:
         """Retrieve a single webpage.
@@ -44,14 +44,27 @@ class Retriever():
             url = self.url
         google_url =\
             "http://webcache.googleusercontent.com/search?q=cache:" + url
+        google_url = url
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1)'
-            ' AppleWebKit/537.36 (KHTML, like Gecko)'
-            ' Chrome/39.0.2171.95 Safari/537.36'
-        }
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "Accept-Encoding": "gzip, deflate",
+            "Dnt": "1",
+            "Upgrade-Insecure-Requests": "1",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36",
+          }
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers=headers) as response:
+            async with session.get(google_url, headers=headers) as response:
+                if response.status != 200:
+                    logger.error(
+                        "URL: " + url + " status code: "
+                        + str(response.status))
+                    return
+                content_type = response.headers["Content-Type"]
+                if "text/html" not in content_type:
+                    logger.debug("URL: " + url + " is not a text/html")
+                    return
                 html = await response.text()
+
         await self.get_all_links(html)
         analyzer = Analyzer(url, html)
         analyzer.analyze()
@@ -71,12 +84,18 @@ class Retriever():
             url = link['href']
             hostname = urlparse(url).netloc
             if self.hostname == hostname:
+                # To avoid querys to the db.
                 if url not in self.visited:
-                    # NOTE: Do I need to save the task?
-                    asyncio.sleep(1)
-                    asyncio.ensure_future(self.retrieve(url))
+                    await self.db.store_url(url, hostname)
                     self.visited.append(url)
-                else:
-                    continue
-            else:
-                continue
+
+    async def scheduler(self) -> None:
+        """Schedule the next download."""
+        await asyncio.sleep(randint(10, 20))
+        asyncio.ensure_future(self.scheduler())
+        url = await self.db.get_next_url()
+        print(url)
+        if url == "NO_URL":
+            return
+        else:
+            await self.retrieve(url)

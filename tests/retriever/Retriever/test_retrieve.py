@@ -43,6 +43,18 @@ class TestRetrieverRetrieve(unittest.TestCase):
 
     @timeout_decorator.timeout(30)
     def test_2(self) -> None:
-        """Test 1."""
+        """Test 2."""
         self.loop.run_until_complete(
             self._retriever.retrieve("https://www.google.com"))
+
+    @timeout_decorator.timeout(30)
+    def test_3(self) -> None:
+        """Test 3.
+
+        Retrieve a non html url.
+        """
+
+        self.loop.run_until_complete(
+            self._retriever.retrieve(
+                "https://www.google.com/images/branding/"
+                "googlelogo/1x/googlelogo_color_272x92dp.png"))
