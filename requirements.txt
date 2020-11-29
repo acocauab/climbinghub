@@ -5,3 +5,4 @@ nltk
 motor
 pymongo
 motor
+colorlog
