@@ -34,6 +34,10 @@ class TestRetrieverRetrieve(unittest.TestCase):
     def setUp(self) -> None:
         """Set up variables for testing."""
         self._retriever = Retriever("https://www.google.es")
+        async def mock(x, y):
+            print("Hello")
+            return None
+        self._retriever.db.store_url = mock
         self.loop = asyncio.get_event_loop()
 
     @timeout_decorator.timeout(30)
