@@ -1,4 +1,4 @@
-"""Tests __init__.
+"""Tests _init_grades.
 
 Links of intetest:
 Mocks
@@ -13,14 +13,14 @@ import unittest
 from unittest.mock import patch
 import timeout_decorator
 
-from src.retriever import Retriever
+from src import grades
 
 # ==== CONSTANTS DEFINITIONS ==================================================
 
 
 # ==== TEST LAUNCH ============================================================
-class TestRetrieverInit(unittest.TestCase):
-    """Test for method __init__.
+class TestgradesInitGrades(unittest.TestCase):
+    """Test for method _init_grades.
 
     Special functions:
         setUpClass -> Executed once bafore all test cases.
@@ -32,10 +32,9 @@ class TestRetrieverInit(unittest.TestCase):
 
     @timeout_decorator.timeout(30)
     def setUp(self) -> None:
-        """Set up variables for testing."""
-        self._retriever = Retriever("https://www.google.es")
+        pass
 
     @timeout_decorator.timeout(30)
     def test_1(self) -> None:
         """Test 1."""
-        self._retriever.__init__("https://www.google.es")
+        grades._init_grades()

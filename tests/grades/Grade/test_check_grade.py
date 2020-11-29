@@ -1,4 +1,4 @@
-"""Tests _parse_tags.
+"""Tests check_grade.
 
 Links of intetest:
 Mocks
@@ -13,14 +13,15 @@ import unittest
 from unittest.mock import patch
 import timeout_decorator
 
-from src.analyzer import Analyzer
+from src.grades import Grade
+from src import grades
 
 # ==== CONSTANTS DEFINITIONS ==================================================
 
 
 # ==== TEST LAUNCH ============================================================
-class TestAnalyzerParseTags(unittest.TestCase):
-    """Test for method _parse_tags.
+class TestGradeCheckGrade(unittest.TestCase):
+    """Test for method check_grade.
 
     Special functions:
         setUpClass -> Executed once bafore all test cases.
@@ -33,34 +34,16 @@ class TestAnalyzerParseTags(unittest.TestCase):
     @timeout_decorator.timeout(30)
     def setUp(self) -> None:
         """Set up variables for testing."""
-        self._analyzer = Analyzer()
+        self._grade = Grade("./src/grades/french.alt.json")
 
     @timeout_decorator.timeout(30)
-    @unittest.skip("TODO")
     def test_1(self) -> None:
         """Test 1."""
-        self._analyzer._parse_tags()
-
-        self.assertEqual(Analyzer.__name__, "Analyzer")
-
-        self.fail("TEST IS NOT IMPLEMENTED!")
+        r = self._grade.check_grade(["nothing", "here"])
+        self.assertEqual(r, grades.NO_GRADE)
 
     @timeout_decorator.timeout(30)
-    @unittest.skip("TODO")
     def test_2(self) -> None:
         """Test 2."""
-        with patch("src.analyzer.requests.get") as mocked_get:
-            mocked_get.return_value.ok = True
-            mocked_get.return_value.json = lambda: {"text": "Some Content"}
-
-            self._analyzer._parse_tags()
-
-        self.fail("TEST IS NOT IMPLEMENTED!")
-
-    @timeout_decorator.timeout(30)
-    @unittest.skip("TODO")
-    def test_exception_1(self) -> None:
-        """Test Expception 1."""
-        self.assertRaises(Exception, self._analyzer._parse_tags)
-
-        self.fail("TEST IS NOT IMPLEMENTED!")
+        r = self._grade.check_grade(["6b", "here"])
+        self.assertEqual(r, "6b")

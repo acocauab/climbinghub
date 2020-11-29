@@ -20,7 +20,8 @@
         "inputs"
     ],
     "ignore_methods": [
-        "router"
+        "router",
+        "_save_to_db"
     ],
     "code_path": "src/",
     "test_path": "/tests",

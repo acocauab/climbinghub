@@ -1,4 +1,4 @@
-"""Tests __init__.
+"""Tests analyze.
 
 Links of intetest:
 Mocks
@@ -13,14 +13,14 @@ import unittest
 from unittest.mock import patch
 import timeout_decorator
 
-from src.retriever import Retriever
+from src.analyzer import Analyzer
 
 # ==== CONSTANTS DEFINITIONS ==================================================
 
 
 # ==== TEST LAUNCH ============================================================
-class TestRetrieverInit(unittest.TestCase):
-    """Test for method __init__.
+class TestAnalyzerAnalyze(unittest.TestCase):
+    """Test for method analyze.
 
     Special functions:
         setUpClass -> Executed once bafore all test cases.
@@ -33,9 +33,12 @@ class TestRetrieverInit(unittest.TestCase):
     @timeout_decorator.timeout(30)
     def setUp(self) -> None:
         """Set up variables for testing."""
-        self._retriever = Retriever("https://www.google.es")
+        self._analyzer = Analyzer("", "<title>Hola 6a+</title>")
 
     @timeout_decorator.timeout(30)
     def test_1(self) -> None:
         """Test 1."""
-        self._retriever.__init__("https://www.google.es")
+        self._analyzer.analyze()
+        print(self._analyzer.route)
+        self._analyzer.route["name"] = "Hola 6a+"
+        self._analyzer.route["grade"]["climbing"] = 615
